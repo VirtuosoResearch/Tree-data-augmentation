@@ -1,0 +1,47 @@
+{
+    "name": "SimCLR",
+    "n_gpu": 2,
+
+    "arch": {
+        "type": "SimCLR",
+        "args": {
+            "encoder_name": "resnet50",
+            "projection_dim": 128
+        }
+    },
+    "data_loader": {
+        "type": "Cifar10DataLoader",
+        "args":{
+            "data_dir": "data/cifar10/",
+            "batch_size": 128,
+            "shuffle": true,
+            "num_workers": 2
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.0003,
+            "weight_decay": 1e-6,
+            "amsgrad": true
+        }
+    },
+    "loss": "nt_xent",
+    "metrics": [],
+    "lr_scheduler": {
+        "type": "CosineAnnealingLR",
+        "args": {
+            "T_max": 400
+        }
+    },
+    "trainer": {
+        "epochs": 600,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        
+        "monitor": "min loss",
+        "early_stop": 600
+    }
+}

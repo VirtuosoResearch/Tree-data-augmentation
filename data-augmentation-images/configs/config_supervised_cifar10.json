@@ -1,0 +1,50 @@
+{
+    "name": "Constraints_CIFAR10",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "ResNet50",
+        "args": {
+            "n_classes": 10
+        }
+    },
+    "data_loader": {
+        "type": "Cifar10DataLoader",
+        "args":{
+            "data_dir": "data/cifar10/",
+            "batch_size": 64,
+            "shuffle": true,
+            "num_workers": 2
+        }
+    },
+    "optimizer": {
+        "type": "SGD",
+        "args":{
+            "lr": 0.1,
+            "momentum": 0.9,
+            "weight_decay": 0.0005,
+            "nesterov": true
+        }
+    },
+    "loss": "nll_loss",
+    "metrics": [
+        "accuracy", "top_k_acc"
+    ],
+    "lr_scheduler": {
+        "type": "CosineAnnealingLR",
+        "args": {
+            "T_max": 200,
+            "eta_min": 0.0005
+        }
+    },
+    "trainer": {
+        "epochs": 200,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        
+        "monitor": "max val_accuracy",
+        "early_stop": 50
+    }
+}

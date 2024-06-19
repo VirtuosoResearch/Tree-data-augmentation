@@ -1,0 +1,47 @@
+{
+    "name": "SimCLR",
+    "n_gpu": 4,
+
+    "arch": {
+        "type": "SimCLR",
+        "args": {
+            "encoder_name": "resnet50",
+            "projection_dim": 128
+        }
+    },
+    "data_loader": {
+        "type": "JinchiDataLoader",
+        "args":{
+            "data_dir": "./data",
+            "batch_size": 64,
+            "shuffle": true,
+            "num_workers": 2
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args":{
+            "lr": 0.0001,
+            "weight_decay": 1e-4,
+            "amsgrad": true
+        }
+    },
+    "loss": "nt_xent",
+    "metrics": [],
+    "lr_scheduler": {
+        "type": "CosineAnnealingLR",
+        "args": {
+            "T_max": 400
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        
+        "monitor": "min loss",
+        "early_stop": 100
+    }
+}
